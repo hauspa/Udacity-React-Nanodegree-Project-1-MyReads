@@ -1,7 +1,7 @@
 import React from 'react'
-// import * as BooksAPI from './BooksAPI'
+import * as BooksAPI from './BooksAPI'
 import './App.css'
-import BookShelf from './BookShelf'
+import BooksUI from './BooksUI'
 
 
 class BooksApp extends React.Component {
@@ -14,6 +14,24 @@ class BooksApp extends React.Component {
      */
     showSearchPage: false,
     books: []
+  }
+
+  componentDidMount(){
+    this.getBooks();
+  }
+
+  getBooks = () => {
+    console.log("Starting fetching the API...");
+    BooksAPI.getAll().then((booksFromAPI) => {
+      console.log(booksFromAPI);
+      this.setState((prevState) => ({
+        ...prevState,
+        books: booksFromAPI
+      }))
+    }).then( () => {
+      console.log(JSON.stringify(this.state.books));
+      console.log(this.state.books[0].title);
+    });
   }
 
   render() {
@@ -50,6 +68,7 @@ class BooksApp extends React.Component {
                 <div className="bookshelf">
                   <h2 className="bookshelf-title">Currently Reading</h2>
                   <div className="bookshelf-books">
+
                     <ol className="books-grid">
                       <li>
                         <div className="book">
