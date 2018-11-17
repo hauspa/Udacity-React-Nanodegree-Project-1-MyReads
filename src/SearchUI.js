@@ -8,15 +8,7 @@ import * as BooksAPI from './BooksAPI'
 class SearchUI extends Component {
 
   state = {
-    searchResults: [],
-    // searchText: ""
-  }
-
-  saveSearch = (searchTerm) => {
-    this.setState((prevState) => ({
-      searchText: searchTerm
-    }));
-    this.searchBooks();
+    searchResults: []
   }
 
   searchBooks = (searchTerm) => {
@@ -28,7 +20,6 @@ class SearchUI extends Component {
         }));
         console.log(response);
       });
-      // .then(() => this.state.searchResults); // return search results
   }
 
   render(){
@@ -54,8 +45,6 @@ class SearchUI extends Component {
             :
             <div>No Search</div>
           }
-
-          {/* <Books books={this.props.books} />  */}
         </div>
       </div>
     );
