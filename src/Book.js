@@ -2,8 +2,24 @@ import React, {Component} from 'react'
 import PropTypes from 'react-proptypes'
 
 class Book extends Component {
+
+  displayAuthors = (authors) => {
+    let authorsText = "";
+    for (let index in authors) {
+      if (index > 0) {
+        authorsText = `${authorsText}, ${authors[index]}`;
+        console.log("Authors: " + authorsText);
+      }
+      else{
+        authorsText = authors[index];
+      }
+    }
+    return authorsText;
+  }
+
   render(){
     let book = this.props.book;
+
     return (
       <li>
         <div className="book">
@@ -20,7 +36,7 @@ class Book extends Component {
             </div>
           </div>
           <div className="book-title">{book.title}</div>
-          <div className="book-authors">{book.authors}</div>
+          <div className="book-authors">{this.displayAuthors(book.authors)}</div>
         </div>
       </li>
     );
