@@ -8,7 +8,6 @@ class Book extends Component {
     for (let index in authors) {
       if (index > 0) {
         authorsText = `${authorsText}, ${authors[index]}`;
-        console.log("Authors: " + authorsText);
       }
       else{
         authorsText = authors[index];
