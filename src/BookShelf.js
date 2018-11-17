@@ -3,11 +3,24 @@ import PropTypes from 'react-proptypes'
 
 class BookShelf extends Component {
 
+  displayHeader = () => {
+    switch (this.props.shelf.text) {
+      case "currentlyReading":
+        return "Currently Reading";
+        break;
+      case "wantToRead":
+        return "Want to Read";
+      default:
+        return "Read";
+     }
+  }
 
   render(){
     return(
       <div className="bookshelf">
-        <h2 className="bookshelf-title">Currently Reading</h2>
+        <h2 className="bookshelf-title">
+          {this.displayHeader()}
+        </h2>
         <div className="bookshelf-books">
           <ol className="books-grid">
             <li>

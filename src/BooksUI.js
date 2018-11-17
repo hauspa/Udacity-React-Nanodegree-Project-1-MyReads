@@ -5,37 +5,6 @@ import BookShelf from './BookShelf'
 
 class BooksUI extends Component {
 
-  constructor(props){
-    super(props);
-  }
-
-  componentDidUpdate(){
-    this.shelves = this.sortBooks();
-  }
-
-  sortBooks = () => {
-    let books = this.props.books;
-    let categories = []; // have an array to better sort
-    let shelves = [];
-    books.forEach((book) => {
-      if (!categories.includes(book.shelf)) {
-        categories.push(book.shelf); // save in Categories to avoid duplicates
-        let shelfObj = { text:book.shelf, books: [book]};
-        shelves.push(shelfObj);
-      }
-      else{ // shelf/category already exists, so just add to last shelf's books array!
-        shelves[shelves.length - 1].books.push(book);
-      }
-    });
-
-    return shelves;
-  }
-
-  displayShelves = () => {
-    let block = "BLOCK";
-    return block;
-  }
-
   render(){
 
     return(
@@ -46,10 +15,11 @@ class BooksUI extends Component {
         <div className="list-books-content">
           <div>
 
-            
-            <BookShelf shelf="" key="" />
-
-
+            <div>
+              {this.props.shelves.map( shelf => (
+                <BookShelf key={shelf.text} shelf={shelf} />
+              ))}
+            </div>
 
             <div className="bookshelf">
               <h2 className="bookshelf-title">Want to Read</h2>
@@ -165,8 +135,9 @@ class BooksUI extends Component {
   }
 }
 
+
 BooksUI.propTypes = {
-  books: PropTypes.array.isRequired
+  shelves: PropTypes.array.isRequired
 }
 
 export default BooksUI

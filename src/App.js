@@ -14,6 +14,7 @@ class BooksApp extends React.Component {
      */
     showSearchPage: false,
     books: [],
+    shelves: []
   }
 
   componentDidMount(){
@@ -22,14 +23,40 @@ class BooksApp extends React.Component {
 
   getBooks = () => {
     console.log("Starting fetching the API...");
-    BooksAPI.getAll().then((booksFromAPI) => {
-      console.log(booksFromAPI);
-      this.setState((prevState) => ({
-        ...prevState,
-        books: booksFromAPI
-      }))
-    }).then(console.log("Done fetching from API!"));
+    BooksAPI.getAll()
+      .then((booksFromAPI) => {
+        console.log(booksFromAPI);
+        this.setState((prevState) => ({
+          ...prevState,
+          books: booksFromAPI
+        }))
+      })
+      .then(() => console.log("Done fetching from API!"))
+      .then(() => this.sortIntoShelves());
   }
+
+  sortIntoShelves = () => {
+    let books = this.state.books;
+    let categories = []; // have an array to better sort
+    let shelves = [];
+    books.forEach((book) => {
+      if (!categories.includes(book.shelf)) {
+        categories.push(book.shelf); // save in Categories to avoid duplicates
+        let shelfObj = { text:book.shelf, books: [book]};
+        shelves.push(shelfObj);
+      }
+      else{ // shelf/category already exists, so just add to last shelf's books array!
+        shelves[shelves.length - 1].books.push(book);
+      }
+    });
+
+    // save in state
+    this.setState((prevState) => ({
+      ...prevState,
+      shelves: shelves
+    }));
+  }
+
 
   render() {
     return (
@@ -56,7 +83,7 @@ class BooksApp extends React.Component {
             </div>
           </div>
         ) : (
-            <BooksUI books={this.state.books} />
+            <BooksUI books={this.state.books} shelves={this.state.shelves} />
         )}
       </div>
     )
