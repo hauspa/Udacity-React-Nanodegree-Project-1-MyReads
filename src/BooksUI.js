@@ -6,14 +6,7 @@ import {Link} from 'react-router-dom'
 
 class BooksUI extends Component {
 
-  constructor(props){
-    super(props);
-    // set the shelf for looping through
-    let shelves = [{long:"Currently Reading", short:"currentlyReading"}, {long:"Want to Read", short:"wantToRead"}, {long:"Read", short:"read"}];
-  }
-
   render(){
-    let shelves2 = this.props.shelves;
     // set the shelf for looping through
     let shelves = [{long:"Currently Reading", short:"currentlyReading"}, {long:"Want to Read", short:"wantToRead"}, {long:"Read", short:"read"}];
 
@@ -29,10 +22,6 @@ class BooksUI extends Component {
                 let books = this.props.books.filter(book => book.shelf === shelfObj.short);
                 return books.length > 0 ? <BookShelf key={shelfObj.short} books={books} header={shelfObj.long} onUpdatingStatus={this.props.onUpdatingStatus} /> : ""
               })}
-
-              {/*shelves2.map( shelf => (
-                <BookShelf key={shelf.text} shelf={shelf} onUpdatingStatus={this.props.onUpdatingStatus} />
-              ))*/}
             </div>
           </div>
         </div>
@@ -46,7 +35,6 @@ class BooksUI extends Component {
 
 
 BooksUI.propTypes = {
-  shelves: PropTypes.array.isRequired,
   books: PropTypes.array.isRequired,
   onUpdatingStatus: PropTypes.func.isRequired
 }

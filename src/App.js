@@ -8,8 +8,7 @@ import {Route} from 'react-router-dom'
 
 class BooksApp extends React.Component {
   state = {
-    books: [],
-    shelves: []
+    books: []    
   }
 
   componentDidMount(){
@@ -30,28 +29,6 @@ class BooksApp extends React.Component {
       .then(() => this.sortIntoShelves());
   }
 
-  sortIntoShelves = () => {
-    let books = this.state.books;
-    let categories = []; // have an array to better sort
-    let shelves = [];
-    books.forEach((book) => {
-      if (!categories.includes(book.shelf)) {
-        categories.push(book.shelf); // save in Categories to avoid duplicates
-        let shelfObj = { text:book.shelf, books: [book]};
-        shelves.push(shelfObj);
-      }
-      else{ // shelf/category already exists, so just add to last shelf's books array!
-        shelves[shelves.length - 1].books.push(book);
-      }
-    });
-
-    // save in state
-    this.setState((prevState) => ({
-      ...prevState,
-      shelves: shelves
-    }));
-  }
-
   updateShelf = (updateData) => {
     // create separate books array, in which I can update the shelf of book
     // QUESTION: might be inefficient, might be better to update ONLY that book in state, but don't know how to do that.
@@ -66,9 +43,6 @@ class BooksApp extends React.Component {
       books: booksArray
     }));
 
-    // sort shelves/hide shelves if empty
-    this.sortIntoShelves();
-
     // update in BooksAPI too?
 
     // if the new status is NONE, then delete!!!
@@ -82,7 +56,7 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         <Route exact path="/" render={() => (
-          <BooksUI books={this.state.books} shelves={this.state.shelves} onUpdatingStatus={this.updateShelf} />
+          <BooksUI books={this.state.books} onUpdatingStatus={this.updateShelf} />
         )} />
         <Route path="/search" render={() => (
           <SearchUI books={this.state.books} />
