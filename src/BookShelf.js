@@ -16,11 +16,6 @@ class BookShelf extends Component {
      }
   }
 
-  handleStatusUpdate = () => {
-    // send up to parent component
-    this.props.onUpdatingStatus();
-  }
-
   render(){
     return(
       <div className="bookshelf">
@@ -28,7 +23,7 @@ class BookShelf extends Component {
           {this.displayHeader()}
         </h2>
         <div className="bookshelf-books">
-          <Books books={this.props.shelf.books} onUpdatingStatus={this.handleStatusUpdate} />
+          <Books books={this.props.shelf.books} onUpdatingStatus={this.props.onUpdatingStatus} />
         </div>
       </div>
     )

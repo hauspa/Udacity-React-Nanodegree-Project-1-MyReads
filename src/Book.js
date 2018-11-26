@@ -16,11 +16,7 @@ class Book extends Component {
     }
     return authorsText;
   }
-
-  handleStatusUpdate = () => {
-    // send up to parent component
-    this.props.onUpdatingStatus();
-  }
+  
 
   render(){
     let book = this.props.book;
@@ -30,7 +26,7 @@ class Book extends Component {
         <div className="book">
           <div className="book-top">
             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
-            <Status shelfInfo={book.shelf} onUpdatingStatus={this.handleStatusUpdate} />
+            <Status shelfInfo={book.shelf} onUpdatingStatus={this.props.onUpdatingStatus} />
           </div>
           <div className="book-title">{book.title}</div>
           <div className="book-authors">{this.displayAuthors(book.authors)}</div>

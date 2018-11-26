@@ -6,13 +6,7 @@ import {Link} from 'react-router-dom'
 
 class BooksUI extends Component {
 
-  handleStatusUpdate = () => {
-    // send up to parent component
-    this.props.onUpdatingStatus();
-  }
-
   render(){
-
     return(
       <div className="list-books">
         <div className="list-books-title">
@@ -22,7 +16,7 @@ class BooksUI extends Component {
           <div>
             <div>
               {this.props.shelves.map( shelf => (
-                <BookShelf key={shelf.text} shelf={shelf} onUpdatingStatus={this.handleStatusUpdate} />
+                <BookShelf key={shelf.text} shelf={shelf} onUpdatingStatus={this.props.onUpdatingStatus} />
               ))}
             </div>
           </div>

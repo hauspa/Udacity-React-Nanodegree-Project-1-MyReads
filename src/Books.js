@@ -4,16 +4,11 @@ import Book from './Book'
 
 class Books extends Component {
 
-  handleStatusUpdate = () => {
-    // send up to parent component
-    this.props.onUpdatingStatus();
-  }
-
   render(){
     return (
       <ol className="books-grid">
         {this.props.books.map(book => (
-          <Book book={book} key={book.id} onUpdatingStatus={this.handleStatusUpdate} />
+          <Book book={book} key={book.id} onUpdatingStatus={this.props.onUpdatingStatus} />
         ))}
       </ol>
     );
