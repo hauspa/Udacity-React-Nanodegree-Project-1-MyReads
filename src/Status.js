@@ -34,7 +34,8 @@ class Status extends Component {
     }));
 
     // send to parent component to update the BooksAPI DB
-    this.props.onUpdatingStatus();
+    let updateData = {bookID:this.props.bookID, newShelf:targetValue};
+    this.props.onUpdatingStatus(updateData);
   }
 
 
@@ -55,6 +56,7 @@ class Status extends Component {
 
 Status.propTypes = {
   shelfInfo: PropTypes.string.isRequired,
+  bookID: PropTypes.string.isRequired,
   onUpdatingStatus: PropTypes.func.isRequired
 }
 

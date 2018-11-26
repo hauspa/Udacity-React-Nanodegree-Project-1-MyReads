@@ -52,9 +52,26 @@ class BooksApp extends React.Component {
     }));
   }
 
-  updateShelf = () => {
-    // update in state AND BooksAPI?
-    // just look for book by ID and update
+  updateShelf = (updateData) => {
+    // create separate books array, in which I can update the shelf of book
+    // QUESTION: might be inefficient, might be better to update ONLY that book in state, but don't know how to do that.
+    let booksArray = this.state.books;
+    let {bookID, newShelf} = updateData;
+    let bookIndex = booksArray.findIndex(book => book.id === bookID);
+    booksArray[bookIndex].shelf = newShelf;
+
+    // update in state
+    this.setState((prevState) => ({
+      ...prevState,
+      books: booksArray
+    }));
+
+    // sort shelves/hide shelves if empty
+    this.sortIntoShelves();
+
+    // update in BooksAPI too?
+
+
     console.log("UPDATED SHELF");
   }
 
