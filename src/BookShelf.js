@@ -16,6 +16,11 @@ class BookShelf extends Component {
      }
   }
 
+  handleStatusUpdate = () => {
+    // send up to parent component
+    this.props.onUpdatingStatus();
+  }
+
   render(){
     return(
       <div className="bookshelf">
@@ -23,7 +28,7 @@ class BookShelf extends Component {
           {this.displayHeader()}
         </h2>
         <div className="bookshelf-books">
-          <Books books={this.props.shelf.books}  />
+          <Books books={this.props.shelf.books} onUpdatingStatus={this.handleStatusUpdate} />
         </div>
       </div>
     )
@@ -31,7 +36,8 @@ class BookShelf extends Component {
 }
 
 BookShelf.propTypes = {
-  shelf: PropTypes.object.isRequired
+  shelf: PropTypes.object.isRequired,
+  onUpdatingStatus: PropTypes.func.isRequired
 }
 
 export default BookShelf

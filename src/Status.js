@@ -32,8 +32,9 @@ class Status extends Component {
     this.setState((prevState) => ({
       shelf: targetValue
     }));
+
     // send to parent component to update the BooksAPI DB
-    
+    this.props.onUpdatingStatus();
   }
 
 
@@ -53,7 +54,8 @@ class Status extends Component {
 }
 
 Status.propTypes = {
-  shelfInfo: PropTypes.string.isRequired
+  shelfInfo: PropTypes.string.isRequired,
+  onUpdatingStatus: PropTypes.func.isRequired
 }
 
 export default Status

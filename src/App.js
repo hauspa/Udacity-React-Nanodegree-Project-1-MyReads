@@ -52,12 +52,18 @@ class BooksApp extends React.Component {
     }));
   }
 
+  updateShelf = () => {
+    // update in state AND BooksAPI?
+    // just look for book by ID and update
+    console.log("UPDATED SHELF");
+  }
+
 
   render() {
     return (
       <div className="app">
         <Route exact path="/" render={() => (
-          <BooksUI books={this.state.books} shelves={this.state.shelves} />
+          <BooksUI books={this.state.books} shelves={this.state.shelves} onUpdatingStatus={this.updateShelf} />
         )} />
         <Route path="/search" render={() => (
           <SearchUI books={this.state.books} />
