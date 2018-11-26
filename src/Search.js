@@ -9,10 +9,16 @@ class Search extends Component {
 
   handleSearch = (event) => {
     let targetValue = event.target.value; // using event in setState causes bug because it's asynchronous
+
+    // set so that the search bar shows the current search characters
     this.setState((prevState) => ({
       searchTerm: targetValue
     }));
-    this.props.onSearching(targetValue);
+
+    // only search if the user is typing/typed
+    if (targetValue.length > 0) {
+      this.props.onSearching(targetValue);
+    }
   }
 
   render(){
