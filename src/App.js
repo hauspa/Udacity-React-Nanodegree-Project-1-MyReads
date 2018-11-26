@@ -8,7 +8,7 @@ import {Route} from 'react-router-dom'
 
 class BooksApp extends React.Component {
   state = {
-    books: []    
+    books: []
   }
 
   componentDidMount(){
@@ -25,8 +25,7 @@ class BooksApp extends React.Component {
           books: booksFromAPI
         }))
       })
-      .then(() => console.log("Done fetching from API!"))
-      .then(() => this.sortIntoShelves());
+      .then(() => console.log("Done fetching from API!"));
   }
 
   updateShelf = (updateData) => {
@@ -44,8 +43,14 @@ class BooksApp extends React.Component {
     }));
 
     // update in BooksAPI too?
+    let bookObj = {id:bookID}
+    BooksAPI.update(bookObj, newShelf)
+      .then((response) => console.log(response));
+    // after updating call getBooks again? so that everything is unidirectional?
 
-    // if the new status is NONE, then delete!!!
+
+
+    // if the new status is NONE, then delete?? Not showing anyways, but maybe still delete in state!
 
 
     console.log("UPDATED SHELF");
