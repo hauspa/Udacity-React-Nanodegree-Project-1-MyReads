@@ -71,6 +71,8 @@ class BooksApp extends React.Component {
 
     // update in BooksAPI too?
 
+    // if the new status is NONE, then delete!!!
+
 
     console.log("UPDATED SHELF");
   }

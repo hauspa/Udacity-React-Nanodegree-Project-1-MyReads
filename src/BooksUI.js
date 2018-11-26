@@ -6,7 +6,17 @@ import {Link} from 'react-router-dom'
 
 class BooksUI extends Component {
 
+  constructor(props){
+    super(props);
+    // set the shelf for looping through
+    let shelves = [{long:"Currently Reading", short:"currentlyReading"}, {long:"Want to Read", short:"wantToRead"}, {long:"Read", short:"read"}];
+  }
+
   render(){
+    let shelves2 = this.props.shelves;
+    // set the shelf for looping through
+    let shelves = [{long:"Currently Reading", short:"currentlyReading"}, {long:"Want to Read", short:"wantToRead"}, {long:"Read", short:"read"}];
+
     return(
       <div className="list-books">
         <div className="list-books-title">
@@ -15,9 +25,14 @@ class BooksUI extends Component {
         <div className="list-books-content">
           <div>
             <div>
-              {this.props.shelves.map( shelf => (
+              {shelves.map((shelfObj) => {
+                let books = this.props.books.filter(book => book.shelf === shelfObj.short);
+                return books.length > 0 ? <BookShelf key={shelfObj.short} books={books} header={shelfObj.long} onUpdatingStatus={this.props.onUpdatingStatus} /> : ""
+              })}
+
+              {/*shelves2.map( shelf => (
                 <BookShelf key={shelf.text} shelf={shelf} onUpdatingStatus={this.props.onUpdatingStatus} />
-              ))}
+              ))*/}
             </div>
           </div>
         </div>

@@ -17,13 +17,15 @@ class BookShelf extends Component {
   }
 
   render(){
+    let {header, books, onUpdatingStatus} = this.props;
     return(
       <div className="bookshelf">
         <h2 className="bookshelf-title">
-          {this.displayHeader()}
+          {/*this.displayHeader()*/}
+          {header}
         </h2>
         <div className="bookshelf-books">
-          <Books books={this.props.shelf.books} onUpdatingStatus={this.props.onUpdatingStatus} />
+          <Books books={books} onUpdatingStatus={onUpdatingStatus} />
         </div>
       </div>
     )
@@ -31,7 +33,8 @@ class BookShelf extends Component {
 }
 
 BookShelf.propTypes = {
-  shelf: PropTypes.object.isRequired,
+  books: PropTypes.array.isRequired,
+  header: PropTypes.string.isRequired,
   onUpdatingStatus: PropTypes.func.isRequired
 }
 
