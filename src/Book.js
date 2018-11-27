@@ -17,6 +17,19 @@ class Book extends Component {
     return authorsText;
   }
 
+  showStyle = () => {
+    let book = this.props.book;
+    let obj = {width: 128, height: 193};
+
+    if (book.hasOwnProperty("imageLinks") && book.imageLinks.hasOwnProperty("thumbnail") && book.imageLinks.thumbnail !== "") {
+      obj.backgroundImage = `url(${book.imageLinks.thumbnail})`;
+    }
+    else{
+      obj.backgroundImage = "none";
+    }
+    return obj;
+  }
+
 
   render(){
     let book = this.props.book;
@@ -25,7 +38,7 @@ class Book extends Component {
       <li>
         <div className="book">
           <div className="book-top">
-            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
+            <div className="book-cover" style={this.showStyle()}></div>
             <Status shelfInfo={book.shelf} bookID={book.id} onUpdatingStatus={this.props.onUpdatingStatus} />
           </div>
           <div className="book-title">{book.title}</div>
