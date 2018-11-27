@@ -21,7 +21,6 @@ class BooksApp extends React.Component {
       .then((booksFromAPI) => {
         console.log(booksFromAPI);
         this.setState((prevState) => ({
-          ...prevState,
           books: booksFromAPI
         }))
       })
@@ -30,7 +29,7 @@ class BooksApp extends React.Component {
 
   updateShelf = (updateData) => {
     // create separate books array, in which I can update the shelf of book
-    // QUESTION: might be inefficient, might be better to update ONLY that book in state, but don't know how to do that.
+    // QUESTION: might be inefficient, might be better to update ONLY that book alone, but don't know how to do that.
     let booksArray = this.state.books;
     let {bookID, newShelf} = updateData;
     let bookIndex = booksArray.findIndex(book => book.id === bookID);
@@ -38,20 +37,27 @@ class BooksApp extends React.Component {
 
     // update in state
     this.setState((prevState) => ({
-      ...prevState,
       books: booksArray
     }));
 
+    // QUESTION: save/update in state or BooksAPI 
     // update in BooksAPI too?
-    let bookObj = {id:bookID}
-    BooksAPI.update(bookObj, newShelf)
+    if (newShelf !== "none") {
+      let bookObj = {id:bookID}
+      BooksAPI.update(bookObj, newShelf)
       .then((response) => console.log(response));
-    // after updating call getBooks again? so that everything is unidirectional?
-
-
-
-    // if the new status is NONE, then delete?? Not showing anyways, but maybe still delete in state!
-
+    }
+    // Delete book with no more shelf
+    else {
+      let filteredArray = this.state.books.filter(book => book.shelf !== "none");
+      // delete in state
+      this.setState((prevState) => ({
+        books: filteredArray
+        }, () => {
+          console.log(this.state.books);
+          console.log("Deleted the book without shelf!");
+      }));
+    }
 
     console.log("UPDATED SHELF");
   }
