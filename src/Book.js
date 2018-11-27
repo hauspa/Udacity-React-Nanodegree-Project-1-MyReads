@@ -39,7 +39,7 @@ class Book extends Component {
         <div className="book">
           <div className="book-top">
             <div className="book-cover" style={this.showStyle()}></div>
-            <Status shelfInfo={book.shelf} bookID={book.id} onUpdatingStatus={this.props.onUpdatingStatus} />
+            <Status shelfInfo={book.hasOwnProperty("shelf") ? book.shelf : "none"} bookID={book.id} onUpdatingStatus={this.props.onUpdatingStatus} />
           </div>
           <div className="book-title">{book.title}</div>
           <div className="book-authors">{this.displayAuthors(book.authors)}</div>
