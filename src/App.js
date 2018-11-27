@@ -61,8 +61,17 @@ class BooksApp extends React.Component {
 
   }
 
-  addToState = (newData) => {
-
+  addToBooks = (newData) => {
+    let {bookID, newShelf} = newData;
+    let bookObj = {id:bookID};
+    let newBook = this.state.books[0];// gotta use entire book object as props in Status Component or call getBooks again!
+    BooksAPI.update(bookObj, newShelf)
+      .then(() => {
+        // update in state
+        this.setState((prevState) => ({
+          books: [...prevState, newBook]
+        }));
+      });
   }
 
 
@@ -73,7 +82,7 @@ class BooksApp extends React.Component {
           <BooksUI books={this.state.books} onUpdatingStatus={this.updateShelf} />
         )} />
         <Route path="/search" render={() => (
-          <SearchUI books={this.state.books} onUpdatingStatus={this.addToState} />
+          <SearchUI books={this.state.books} onUpdatingStatus={this.addToBooks} />
         )} />
       </div>
     )
