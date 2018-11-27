@@ -35,17 +35,17 @@ class BooksApp extends React.Component {
     let bookIndex = booksArray.findIndex(book => book.id === bookID);
     booksArray[bookIndex].shelf = newShelf;
 
-    // update in state
-    this.setState((prevState) => ({
-      books: booksArray
-    }));
-
-    // QUESTION: save/update in state or BooksAPI 
-    // update in BooksAPI too?
+    // QUESTION: save/update in state or BooksAPI
     if (newShelf !== "none") {
-      let bookObj = {id:bookID}
+      let bookObj = {id:bookID};
       BooksAPI.update(bookObj, newShelf)
-      .then((response) => console.log(response));
+      // .then((response) => console.log(response))
+      .then(() => {
+        // update in state
+        this.setState((prevState) => ({
+          books: booksArray
+        }));
+      });
     }
     // Delete book with no more shelf
     else {
@@ -59,7 +59,10 @@ class BooksApp extends React.Component {
       }));
     }
 
-    console.log("UPDATED SHELF");
+  }
+
+  addToState = (newData) => {
+
   }
 
 
@@ -70,7 +73,7 @@ class BooksApp extends React.Component {
           <BooksUI books={this.state.books} onUpdatingStatus={this.updateShelf} />
         )} />
         <Route path="/search" render={() => (
-          <SearchUI books={this.state.books} />
+          <SearchUI books={this.state.books} onUpdatingStatus={this.addToState} />
         )} />
       </div>
     )

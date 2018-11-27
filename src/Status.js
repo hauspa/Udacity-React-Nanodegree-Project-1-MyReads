@@ -7,11 +7,6 @@ class Status extends Component {
     shelf: ""
   }
 
-  componentDidMount = () => {
-    console.log("Status: " + this.props.shelfInfo);
-
-  }
-
   showSelected = () => {
     // since better not set state to props, gonna leave state empty at first and only use state once user changes original shelf
 

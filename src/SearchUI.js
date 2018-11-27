@@ -41,7 +41,7 @@ class SearchUI extends Component {
         </div>
         <div className="search-books-results">
           {this.state.searchResults.length > 0 ?
-            <Books books={this.state.searchResults} />
+            <Books books={this.state.searchResults} onUpdatingStatus={this.props.onUpdatingStatus} />
             :
             <div>No Search</div>
           }
@@ -52,7 +52,8 @@ class SearchUI extends Component {
 }
 
 SearchUI.propTypes = {
-  books: PropTypes.array
+  books: PropTypes.array,
+  onUpdatingStatus: PropTypes.func.isRequired
 }
 
 export default SearchUI
