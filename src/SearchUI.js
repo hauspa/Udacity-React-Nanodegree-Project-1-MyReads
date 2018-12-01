@@ -15,11 +15,26 @@ class SearchUI extends Component {
     // using BooksAPI to search for books
     BooksAPI.search(searchTerm)
       .then((response) => {
+        let books = this.checkForStatus(response);
         this.setState((prevState) => ({
-          searchResults: response
+          searchResults: books
         }));
-        console.log(response);
+        console.log(books);
       });
+  }
+
+  checkForStatus = (books) => {
+    let stateBooks = this.props.books;
+    for (let book of books) {
+      // if search results include books already in state, then change status of that search result to other than "none"
+      for (var i = 0; i < stateBooks.length; i++) {
+        if (stateBooks[i].id === book.id) {
+          console.log("Found book match to state: " + book.title);
+          book.shelf = stateBooks[i].shelf;
+        }
+      }
+    }
+    return books;
   }
 
   render(){
