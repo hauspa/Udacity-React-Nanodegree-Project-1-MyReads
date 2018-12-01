@@ -33,47 +33,67 @@ class BooksApp extends React.Component {
     let booksArray = this.state.books;
     let {bookID, newShelf} = updateData;
     let bookIndex = booksArray.findIndex(book => book.id === bookID);
-    booksArray[bookIndex].shelf = newShelf;
+    // booksArray[bookIndex].shelf = newShelf;
 
-    // QUESTION: save/update in state or BooksAPI
-    if (newShelf !== "none") {
-      let bookObj = {id:bookID};
-      BooksAPI.update(bookObj, newShelf)
-      // .then((response) => console.log(response))
-      .then(() => {
-        // update in state
-        this.setState((prevState) => ({
-          books: booksArray
-        }));
-      });
-    }
-    // Delete book with no more shelf
-    else {
-      let filteredArray = this.state.books.filter(book => book.shelf !== "none");
-      // delete in state
-      this.setState((prevState) => ({
-        books: filteredArray
-        }, () => {
-          console.log(this.state.books);
-          console.log("Deleted the book without shelf!");
-      }));
-    }
+    let bookObj = {id:bookID};
+    BooksAPI.update(bookObj, newShelf)
+    // .then((response) => console.log(response))
+    .then(() => {
+      // update state
+      this.getBooks();
+    });
+
+    // // check whether it's a new book
+    // if (booksArray.findIndex(book => book.id === bookID)) {
+    //   // book already exists, so just update
+    //   let bookObj = {id:bookID};
+    //   BooksAPI.update(bookObj, newShelf)
+    //   // .then((response) => console.log(response))
+    //   .then(() => {
+    //     // update state
+    //     this.getBooks();
+    //   });
+    // }
+    // else{
+    //   this.addNewBook(updateData);
+    // }
+
+    // if (newShelf !== "none") {
+    //   let bookObj = {id:bookID};
+    //   BooksAPI.update(bookObj, newShelf)
+    //   // .then((response) => console.log(response))
+    //   .then(() => {
+    //     // update in state
+    //     this.setState((prevState) => ({
+    //       books: booksArray
+    //     }));
+    //   });
+    // }
+    // // Delete book with no more shelf
+    // else {
+    //   let filteredArray = this.state.books.filter(book => book.shelf !== "none");
+    //   // delete in state
+    //   this.setState((prevState) => ({
+    //     books: filteredArray
+    //     }, () => {
+    //       console.log(this.state.books);
+    //       console.log("Deleted the book without shelf!");
+    //   }));
+    // }
 
   }
 
   // TODO: if user changes shelf of book in state, but in SearchUI, it will currently add the same book in state twice!
 
-  addToBooks = (newData) => {
+  addNewBook = (newData) => {
     let {bookID, newShelf} = newData;
     let bookObj = {id:bookID};
-    // TODO: fix problem with only having bookID here. using placeholder this.state.books[0] atm.
-    let newBook = this.state.books[0]; // gotta use entire book object as props in Status Component or call getBooks again!
     BooksAPI.update(bookObj, newShelf)
       .then(() => {
-        // update in state
+        // update state
         this.getBooks();
         // this.setState((prevState) => ({
-        //   books: [...prevState, newBook]
+        //   books: [...prevState, newBook] // gotta use entire book object as props in Status Component or call getBooks again!
         // }));
       });
   }
@@ -86,7 +106,7 @@ class BooksApp extends React.Component {
           <BooksUI books={this.state.books} onUpdatingStatus={this.updateShelf} />
         )} />
         <Route path="/search" render={() => (
-          <SearchUI books={this.state.books} onUpdatingStatus={this.addToBooks} />
+          <SearchUI books={this.state.books} onUpdatingStatus={this.updateShelf} />
         )} />
       </div>
     )
