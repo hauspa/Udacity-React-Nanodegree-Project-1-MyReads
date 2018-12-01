@@ -15,7 +15,7 @@ class SearchUI extends Component {
     // using BooksAPI to search for books. Only search if the user is typing/typed
     if (searchTerm.length > 0) {
       BooksAPI.search(searchTerm)
-      .then((response) => {
+      .then((response) => {        
         let books = this.checkForStatus(response);
         this.setState((prevState) => ({
           searchResults: books

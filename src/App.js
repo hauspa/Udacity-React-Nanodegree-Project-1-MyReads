@@ -61,16 +61,20 @@ class BooksApp extends React.Component {
 
   }
 
+  // TODO: if user changes shelf of book in state, but in SearchUI, it will currently add the same book in state twice!
+
   addToBooks = (newData) => {
     let {bookID, newShelf} = newData;
     let bookObj = {id:bookID};
-    let newBook = this.state.books[0];// gotta use entire book object as props in Status Component or call getBooks again!
+    // TODO: fix problem with only having bookID here. using placeholder this.state.books[0] atm.
+    let newBook = this.state.books[0]; // gotta use entire book object as props in Status Component or call getBooks again!
     BooksAPI.update(bookObj, newShelf)
       .then(() => {
         // update in state
-        this.setState((prevState) => ({
-          books: [...prevState, newBook]
-        }));
+        this.getBooks();
+        // this.setState((prevState) => ({
+        //   books: [...prevState, newBook]
+        // }));
       });
   }
 

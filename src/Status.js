@@ -10,8 +10,6 @@ class Status extends Component {
   showSelected = () => {
     // since better not set state to props, gonna leave state empty at first and only use state once user changes original shelf
 
-    console.log("Selected: " + this.props.shelfInfo);
-
     // user has changed the shelf => use state
     if(this.state.shelf.length > 0){
       return this.state.shelf;
