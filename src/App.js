@@ -27,36 +27,17 @@ class BooksApp extends React.Component {
       .then(() => console.log("Done fetching from API!"));
   }
 
-  updateShelf = (updateData) => {
-    // create separate books array, in which I can update the shelf of book
-    // QUESTION: might be inefficient, might be better to update ONLY that book alone, but don't know how to do that.
+  updateStatus = (updateData) => {
     let booksArray = this.state.books;
     let {bookID, newShelf} = updateData;
     let bookIndex = booksArray.findIndex(book => book.id === bookID);
-    // booksArray[bookIndex].shelf = newShelf;
+    booksArray[bookIndex].shelf = newShelf;
 
-    let bookObj = {id:bookID};
-    BooksAPI.update(bookObj, newShelf)
-    // .then((response) => console.log(response))
-    .then(() => {
-      // update state
-      this.getBooks();
-    });
+    // Add new book or update shelf for existing book or delete book with no shelf
+    // check whether book exists or adding new book
+    if (true) {
 
-    // // check whether it's a new book
-    // if (booksArray.findIndex(book => book.id === bookID)) {
-    //   // book already exists, so just update
-    //   let bookObj = {id:bookID};
-    //   BooksAPI.update(bookObj, newShelf)
-    //   // .then((response) => console.log(response))
-    //   .then(() => {
-    //     // update state
-    //     this.getBooks();
-    //   });
-    // }
-    // else{
-    //   this.addNewBook(updateData);
-    // }
+    }
 
     // if (newShelf !== "none") {
     //   let bookObj = {id:bookID};
@@ -80,22 +61,23 @@ class BooksApp extends React.Component {
     //       console.log("Deleted the book without shelf!");
     //   }));
     // }
-
   }
 
-  // TODO: if user changes shelf of book in state, but in SearchUI, it will currently add the same book in state twice!
-
-  addNewBook = (newData) => {
-    let {bookID, newShelf} = newData;
-    let bookObj = {id:bookID};
+  updateShelf = (updateData) => {
+    // create separate books array, in which I can update the shelf of book
+    // let {bookID, newShelf} = updateData;
+    let {book, newShelf} = updateData;
+    // let bookObj = {id:bookID};
+    let bookObj = {id:book.id}; // only sending ID instead of entire object will be slightly faster in working with remote DB
     BooksAPI.update(bookObj, newShelf)
-      .then(() => {
-        // update state
-        this.getBooks();
-        // this.setState((prevState) => ({
-        //   books: [...prevState, newBook] // gotta use entire book object as props in Status Component or call getBooks again!
-        // }));
-      });
+    .then((response) => {
+      // update state
+      this.getBooks();
+      // this.setState((prevState) => ({
+      //   books: booksArray
+      // }));
+    });
+
   }
 
 

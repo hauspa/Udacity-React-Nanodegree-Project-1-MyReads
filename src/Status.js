@@ -15,7 +15,8 @@ class Status extends Component {
       return this.state.shelf;
     }
     else{
-      return this.props.shelfInfo;
+      let book = this.props.book;
+      return book.hasOwnProperty("shelf") ? book.shelf : "none"; // search results have no shelf and having no such property would cause bug
     }
   }
 
@@ -28,7 +29,8 @@ class Status extends Component {
     }));
 
     // send to parent component to update the BooksAPI DB
-    let updateData = {bookID:this.props.bookID, newShelf:targetValue};
+    // let updateData = {bookID:this.props.bookID, newShelf:targetValue};
+    let updateData = {book: this.props.book, newShelf: targetValue};
     this.props.onUpdatingStatus(updateData);
   }
 
@@ -49,8 +51,9 @@ class Status extends Component {
 }
 
 Status.propTypes = {
-  shelfInfo: PropTypes.string.isRequired,
-  bookID: PropTypes.string.isRequired,
+  shelfInfo: PropTypes.string,
+  bookID: PropTypes.string,
+  book: PropTypes.object.isRequired,
   onUpdatingStatus: PropTypes.func.isRequired
 }
 
