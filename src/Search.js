@@ -15,10 +15,8 @@ class Search extends Component {
       searchTerm: targetValue
     }));
 
-    // only search if the user is typing/typed
-    if (targetValue.length > 0) {
-      this.props.onSearching(targetValue);
-    }
+    // send searchTerm to parent component
+    this.props.onSearching(targetValue);
   }
 
   render(){

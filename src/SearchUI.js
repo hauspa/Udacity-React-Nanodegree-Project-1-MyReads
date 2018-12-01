@@ -12,8 +12,9 @@ class SearchUI extends Component {
   }
 
   searchBooks = (searchTerm) => {
-    // using BooksAPI to search for books
-    BooksAPI.search(searchTerm)
+    // using BooksAPI to search for books. Only search if the user is typing/typed
+    if (searchTerm.length > 0) {
+      BooksAPI.search(searchTerm)
       .then((response) => {
         let books = this.checkForStatus(response);
         this.setState((prevState) => ({
@@ -21,6 +22,13 @@ class SearchUI extends Component {
         }));
         console.log(books);
       });
+    }
+    else{
+      // empty search bar => set state to zero results
+      this.setState((prevState) => ({
+        searchResults: []
+      }));
+    }
   }
 
   checkForStatus = (books) => {
