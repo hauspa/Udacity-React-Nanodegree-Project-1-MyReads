@@ -27,55 +27,51 @@ class BooksApp extends React.Component {
       .then(() => console.log("Done fetching from API!"));
   }
 
-  updateStatus = (updateData) => {
-    let booksArray = this.state.books;
-    let {bookID, newShelf} = updateData;
-    let bookIndex = booksArray.findIndex(book => book.id === bookID);
-    booksArray[bookIndex].shelf = newShelf;
+  // adding/updating book in state
+  updateState = (updateData) => {
+    let stateBooks = this.state.books;
+    let {book, newShelf} = updateData;
+    let bookIndex = stateBooks.findIndex(stateBook=> stateBook.id === book.id);
 
     // Add new book or update shelf for existing book or delete book with no shelf
     // check whether book exists or adding new book
-    if (true) {
+    if (bookIndex !== -1) {
+      // book exists => update
+      console.log("STATE: Book already exists => UPDATE");
+      stateBooks[bookIndex].shelf = newShelf;
 
+      // get rid of all books that might have "none" as shelf
+      let filteredArray = stateBooks.filter(book => book.shelf !== "none");
+
+      this.setState({
+          books: filteredArray
+        },() => {
+          console.log("Updated book in state!");
+      });
     }
+    else{
+      // book doesn't exist yet => add
+      console.log("STATE: Book does not exist yet => ADD");
 
-    // if (newShelf !== "none") {
-    //   let bookObj = {id:bookID};
-    //   BooksAPI.update(bookObj, newShelf)
-    //   // .then((response) => console.log(response))
-    //   .then(() => {
-    //     // update in state
-    //     this.setState((prevState) => ({
-    //       books: booksArray
-    //     }));
-    //   });
-    // }
-    // // Delete book with no more shelf
-    // else {
-    //   let filteredArray = this.state.books.filter(book => book.shelf !== "none");
-    //   // delete in state
-    //   this.setState((prevState) => ({
-    //     books: filteredArray
-    //     }, () => {
-    //       console.log(this.state.books);
-    //       console.log("Deleted the book without shelf!");
-    //   }));
-    // }
+      // setting shelf for new book entry. 
+      book.shelf = newShelf;
+
+      this.setState((prevState) => ({
+        books: [...prevState.books, book]
+      }));
+    }
   }
 
   updateShelf = (updateData) => {
     // create separate books array, in which I can update the shelf of book
-    // let {bookID, newShelf} = updateData;
     let {book, newShelf} = updateData;
-    // let bookObj = {id:bookID};
     let bookObj = {id:book.id}; // only sending ID instead of entire object will be slightly faster in working with remote DB
     BooksAPI.update(bookObj, newShelf)
     .then((response) => {
+      // this.getBooks();
+      console.log("Updated in BooksAPI");
       // update state
-      this.getBooks();
-      // this.setState((prevState) => ({
-      //   books: booksArray
-      // }));
+      this.updateState(updateData);
     });
 
   }
