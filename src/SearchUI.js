@@ -4,6 +4,8 @@ import {Link} from 'react-router-dom'
 import Books from './Books'
 import Search from './Search'
 import * as BooksAPI from './BooksAPI'
+import SEARCH_TERMS from './json/search_terms.json'
+
 
 class SearchUI extends Component {
 
@@ -13,14 +15,24 @@ class SearchUI extends Component {
 
   searchBooks = (searchTerm) => {
     // using BooksAPI to search for books. Only search if the user is typing/typed
+    if(this.isLegitSearchTerm(searchTerm)){
+
+    }
+    // now check for length
+    else{
+
+    }
+
+    // gotta display on UI that illegitimate search term!
+
     if (searchTerm.length > 0) {
       BooksAPI.search(searchTerm)
-      .then((response) => {        
+      .then((response) => {
         let books = this.checkForStatus(response);
         this.setState((prevState) => ({
           searchResults: books
         }));
-        console.log(books);
+        // console.log(books);
       });
     }
     else{
@@ -31,13 +43,25 @@ class SearchUI extends Component {
     }
   }
 
+  isLegitSearchTerm = (searchTerm) => {
+    console.log("Checking Legit");
+    for (let term of SEARCH_TERMS) {
+      if (term.toLowerCase().includes(searchTerm.toLowerCase())) {
+        console.log("SEARCH: Found Match");
+        return true;
+      }
+    }
+    console.log("No Match Found");
+    return false;
+  }
+
   checkForStatus = (books) => {
     let stateBooks = this.props.books;
     for (let book of books) {
       // if search results include books already in state, then change status of that search result to other than "none"
       for (var i = 0; i < stateBooks.length; i++) {
         if (stateBooks[i].id === book.id) {
-          console.log("Found book match to state: " + book.title);
+          // console.log("Found book match to state: " + book.title);
           book.shelf = stateBooks[i].shelf;
         }
       }
