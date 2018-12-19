@@ -26,4 +26,8 @@ class Search extends Component {
   }
 }
 
+Search.propTypes = {
+  onSearching: PropTypes.func.isRequired
+}
+
 export default Search
