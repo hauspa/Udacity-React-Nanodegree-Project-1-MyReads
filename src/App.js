@@ -11,10 +11,12 @@ class BooksApp extends React.Component {
     books: []
   }
 
+  // load the books once at beginning
   componentDidMount(){
     this.getBooks();
   }
 
+  // fetch books from Udacity API
   getBooks = () => {
     console.log("Starting fetching the API...");
     BooksAPI.getAll()
@@ -53,7 +55,7 @@ class BooksApp extends React.Component {
       // book doesn't exist yet => add
       console.log("STATE: Book does not exist yet => ADD");
 
-      // setting shelf for new book entry. 
+      // setting shelf for new book entry.
       book.shelf = newShelf;
 
       this.setState((prevState) => ({
@@ -62,15 +64,15 @@ class BooksApp extends React.Component {
     }
   }
 
+  // update shelf in remote API/DB
   updateShelf = (updateData) => {
     // create separate books array, in which I can update the shelf of book
     let {book, newShelf} = updateData;
     let bookObj = {id:book.id}; // only sending ID instead of entire object will be slightly faster in working with remote DB
     BooksAPI.update(bookObj, newShelf)
     .then((response) => {
-      // this.getBooks();
       console.log("Updated in BooksAPI");
-      // update state
+      // first update in API/DB, then update in local state
       this.updateState(updateData);
     });
 

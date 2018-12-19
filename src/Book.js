@@ -4,6 +4,7 @@ import Status from './Status'
 
 class Book extends Component {
 
+  // to show multiple authors properly
   displayAuthors = (authors) => {
     let authorsText = "";
     for (let index in authors) {
@@ -17,6 +18,7 @@ class Book extends Component {
     return authorsText;
   }
 
+  // for cases when there is no thumbnail
   showStyle = () => {
     let book = this.props.book;
     let obj = {width: 128, height: 193};

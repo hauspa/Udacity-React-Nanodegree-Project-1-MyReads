@@ -14,10 +14,10 @@ class SearchUI extends Component {
     isIllegitimateSearch: false
   }
 
+  // using BooksAPI to search for books.
   searchBooks = (searchTerm) => {
-    // using BooksAPI to search for books. Only search if the user is typing/typed
 
-    // only search if characters in search bar & legitimate search term provided by Udacity API
+    // only search if the user is typing/typed & legitimate search term provided by Udacity API
     if (searchTerm.length > 0) {
 
       // check whether legitimate search or not. If not, will save that in state & display illegitimate search.
@@ -29,7 +29,6 @@ class SearchUI extends Component {
           this.setState((prevState) => ({
             searchResults: books
           }));
-          // console.log(books);
         });
       }
       else{
@@ -45,6 +44,7 @@ class SearchUI extends Component {
     }
   }
 
+  // checking whether search term is included in the list of search terms provided by Udacity API
   isLegitSearchTerm = (searchTerm) => {
     console.log("Checking Legit");
     for (let term of SEARCH_TERMS) {
@@ -66,6 +66,7 @@ class SearchUI extends Component {
     return false;
   }
 
+  // get status of each book in case search results include books user has already saved.
   checkForStatus = (searchResults) => {
     let userBooks = this.props.books;
     for (let book of searchResults) {

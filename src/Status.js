@@ -14,14 +14,14 @@ class Status extends Component {
     if(this.state.shelf.length > 0){
       return this.state.shelf;
     }
-    else{
+    else{ // user has not changed shelf yet => use props
       let book = this.props.book;
-      return book.hasOwnProperty("shelf") ? book.shelf : "none"; // search results have no shelf and having no such property would cause bug
+      return book.hasOwnProperty("shelf") ? book.shelf : "none"; // search result have no shelf and having no such property would cause bug
     }
   }
 
   handleChange = (event) => {
-    let targetValue = event.target.value; // gotta save as property first, otherwise bug/crash because of asynch
+    let targetValue = event.target.value; // gotta save as property first, otherwise bug/crash because asynch
 
     // change state to reflect what user setState
     this.setState((prevState) => ({
@@ -29,7 +29,6 @@ class Status extends Component {
     }));
 
     // send to parent component to update the BooksAPI DB
-    // let updateData = {bookID:this.props.bookID, newShelf:targetValue};
     let updateData = {book: this.props.book, newShelf: targetValue};
     this.props.onUpdatingStatus(updateData);
   }

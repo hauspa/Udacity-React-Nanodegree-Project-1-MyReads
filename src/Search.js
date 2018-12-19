@@ -8,7 +8,7 @@ class Search extends Component {
   }
 
   handleSearch = (event) => {
-    let targetValue = event.target.value; // using event in setState causes bug because it's asynchronous
+    let targetValue = event.target.value; // using event in setState causes bug because it's asynchronous -> gotta save as separate property
 
     // set so that the search bar shows the current search characters
     this.setState((prevState) => ({
