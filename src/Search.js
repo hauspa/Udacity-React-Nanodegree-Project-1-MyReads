@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'react-proptypes'
+import { DebounceInput } from 'react-debounce-input';
 
 class Search extends Component {
 
@@ -21,7 +22,13 @@ class Search extends Component {
 
   render(){
     return (
-      <input type="text" placeholder="Search by title or author" onChange={this.handleSearch} value={this.state.searchTerm} />
+      <DebounceInput
+        minLength={2}
+        debounceTimeout={200}
+        onChange={this.handleSearch}
+        value={this.state.searchTerm}
+        placeholder='Search by title or author'
+      />
     );
   }
 }
