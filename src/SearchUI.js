@@ -71,7 +71,7 @@ class SearchUI extends Component {
     let userBooks = this.props.books;
     for (let book of searchResults) {
       // if search results include books already in state, then change status of that search result to other than "none"
-      for (var i = 0; i < userBooks.length; i++) {
+      for (let i = 0; i < userBooks.length; i++) {
         if (userBooks[i].id === book.id) {
           // console.log("Found book match to state: " + book.title);
           book.shelf = userBooks[i].shelf;
