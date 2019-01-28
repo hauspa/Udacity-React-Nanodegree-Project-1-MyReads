@@ -23,25 +23,23 @@ class Book extends Component {
     let book = this.props.book;
     let obj = {width: 128, height: 193};
 
-    if (book.hasOwnProperty("imageLinks") && book.imageLinks.hasOwnProperty("thumbnail") && book.imageLinks.thumbnail !== "") {
-      obj.backgroundImage = `url(${book.imageLinks.thumbnail})`;
-    }
-    else{
-      obj.backgroundImage = "none";
-    }
+    book.hasOwnProperty("imageLinks")
+      ? obj.backgroundImage = `url(${book.imageLinks.thumbnail})`
+      : obj.backgroundImage = `url(${'https://dummyimage.com/128x193/2e7c31/fff.png&text=Cover+Missing'})`
+
     return obj;
   }
 
 
   render(){
     let book = this.props.book;
+    console.log('Book: ', book)
 
     return (
       <li>
         <div className="book">
           <div className="book-top">
             <div className="book-cover" style={this.showStyle()}></div>
-            {/* <Status shelfInfo={book.hasOwnProperty("shelf") ? book.shelf : "none"} bookID={book.id} onUpdatingStatus={this.props.onUpdatingStatus} /> */}
             <Status book={book} onUpdatingStatus={this.props.onUpdatingStatus} />
           </div>
           <div className="book-title">{book.title}</div>

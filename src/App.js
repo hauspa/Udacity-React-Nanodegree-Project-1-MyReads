@@ -32,7 +32,6 @@ class BooksApp extends React.Component {
 
   // adding/updating book in state
   updateState = (updateData) => {
-    // let stateBooks = this.state.books;
     let stateBooks = []
     this.setState((prevState) => { // since shouldn't use this.state.books, using function form!
       stateBooks = prevState
