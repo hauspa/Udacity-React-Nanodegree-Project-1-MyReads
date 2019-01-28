@@ -3,7 +3,8 @@ import * as BooksAPI from './BooksAPI'
 import './App.css'
 import BooksUI from './BooksUI'
 import SearchUI from './SearchUI'
-import {Route} from 'react-router-dom'
+import ErrorPage from './ErrorPage'
+import {Route, Switch} from 'react-router-dom'
 
 
 class BooksApp extends React.Component {
@@ -87,12 +88,15 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        <Route exact path="/" render={() => (
-          <BooksUI books={this.state.books} onUpdatingStatus={this.updateShelf} />
-        )} />
-        <Route path="/search" render={() => (
-          <SearchUI books={this.state.books} onUpdatingStatus={this.updateShelf} />
-        )} />
+        <Switch>
+          <Route exact path="/" render={() => (
+            <BooksUI books={this.state.books} onUpdatingStatus={this.updateShelf} />
+          )} />
+          <Route path="/search" render={() => (
+            <SearchUI books={this.state.books} onUpdatingStatus={this.updateShelf} />
+          )} />
+          <Route component={ErrorPage} />
+        </Switch>
       </div>
     )
   }
