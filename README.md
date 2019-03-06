@@ -1,6 +1,6 @@
 # Project Description
 
-Project Number 1 for Udacity's React Nanodegree, with a focus on Redux.
+Project Number 1 for Udacity's React Nanodegree, with a focus on React.
 
 App to display and search for books using React.
 
