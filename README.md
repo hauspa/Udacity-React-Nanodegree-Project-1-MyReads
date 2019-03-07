@@ -1,8 +1,8 @@
 # Project Description
 
-Project Number 1 for Udacity's React Nanodegree, with a focus on React.
+A web app built with React to keep track of books a user wants to read or has already read. Users can search for books in a database of books and save books for later or mark books as read on their dashboard. 
 
-App to display and search for books using React.
+A project for Udacity's React Nanodegree with a focus on React.
 
 <br/>
 
